@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import Home from '@/views/Home.vue';
 import AuthRoot from '@/views/auth/Root.vue';
+import HomeRoot from '@/views/Root.vue';
 import AuthLogin from '@/views/auth/Login.vue';
 import AuthRegister from '@/views/auth/Register.vue';
 
@@ -21,16 +23,37 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/',
-    name: 'Home',
-    component: Home,
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    component: HomeRoot,
+    redirect: { name: 'Home' },
+    children: [
+      {
+        path: '/home',
+        name: 'Home',
+        component: Home,
+      }, {
+        path: '/boards',
+        name: 'Boards',
+        component: () => import(/* webpackChunkName: "boards" */ '@/views/boards/List.vue'),
+      }, {
+        path: '/boards/:id',
+        component: () => import(/* webpackChunkName: "board" */ '@/views/boards/Root.vue'),
+        children: [
+          {
+            path: '',
+            name: 'Board',
+            component: () => import(/* webpackChunkName: "board" */ '@/views/boards/Board.vue'),
+          },
+        ],
+      }, {
+        path: '/settings',
+        name: 'Settings',
+        component: () => import(/* webpackChunkName: "settings" */ '@/views/Settings.vue'),
+      }, {
+        path: '/trash',
+        name: 'Trash',
+        component: () => import(/* webpackChunkName: "trash" */ '@/views/Trash.vue'),
+      },
+    ],
   },
 ];
 

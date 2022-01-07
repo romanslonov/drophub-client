@@ -1,4 +1,6 @@
 import { createStore } from 'vuex';
+import profile from './profile';
+import board from './board';
 
 export default createStore({
   state: {
@@ -8,5 +10,7 @@ export default createStore({
   actions: {
   },
   modules: {
+    profile,
+    board,
   },
 });
