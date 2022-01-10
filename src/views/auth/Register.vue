@@ -7,8 +7,17 @@
             type="email"
             name="email"
             label="Email"
-            placeholder="Enter you email"
+            placeholder="Enter your email"
             v-model="form.email"
+          />
+      </div>
+      <div class="mb-2">
+          <v-textbox
+            type="text"
+            name="name"
+            label="Name"
+            placeholder="Enter your name"
+            v-model="form.name"
           />
       </div>
       <div class="mb-4">
@@ -20,7 +29,7 @@
           v-model="form.password"
         />
       </div>
-      <v-button type="submit" appearance="primary" class="w-full mb-2">Login</v-button>
+      <v-button type="submit" appearance="primary" class="w-full mb-2">Register</v-button>
       <div class="text-center text-sm">
         or <router-link class="text-blue-600 hover:text-blue-700" :to="{ name: 'Login' }">
         login
@@ -34,22 +43,23 @@
 import { reactive, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 // eslint-disable-next-line import/no-cycle
-import { login } from '@/api/auth';
+import { register } from '@/api/auth';
 import VTextbox from '@/components/Textbox.vue';
 import VButton from '@/components/Button.vue';
 import Auth from '@/Auth';
 
 export default defineComponent({
-  name: 'Login',
+  name: 'Register',
   setup() {
     const router = useRouter();
 
     const form = reactive({
       email: '',
       password: '',
+      name: '',
     });
     const submit = async () => {
-      const token = await login(form).then((data) => data.token);
+      const token = await register(form).then((data) => data.token);
 
       Auth.authenticateUser(token);
 
