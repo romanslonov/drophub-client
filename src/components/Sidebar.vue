@@ -52,7 +52,7 @@
       <div class="h-2 w-full bg-gray-200 rounded">
         <div
           class="h-2 w-full bg-black rounded"
-          style="width:25%"
+          :style="{ width: `${( profile.usage / 104857600) * 100}%` }"
         ></div>
       </div>
     </div>
