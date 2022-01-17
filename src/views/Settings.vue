@@ -40,12 +40,15 @@
 </template>
 
 <script lang="ts">
-import { reactive, computed, defineComponent } from 'vue';
+import {
+  reactive, computed, defineComponent, onMounted,
+} from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import VTextbox from '@/components/Textbox.vue';
 import VButton from '@/components/Button.vue';
 import Auth from '@/Auth';
+import { Profile } from '@/api';
 
 export default defineComponent({
   name: 'Settings',
@@ -57,7 +60,7 @@ export default defineComponent({
       email: '',
     });
 
-    const profile = computed(() => store.state.profile.profile);
+    const profile = computed((): Profile => store.state.profile.profile);
 
     const submit = () => false;
 
@@ -66,6 +69,11 @@ export default defineComponent({
 
       router.push({ name: 'Login' });
     };
+
+    onMounted(() => {
+      form.name = profile.value.name;
+      form.email = profile.value.email;
+    });
 
     return {
       profile,
