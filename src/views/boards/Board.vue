@@ -9,6 +9,7 @@
       :file="file"
     />
     <button
+      :style="{ 'min-height': '269px' }"
       class="
         flex flex-col items-center justify-center
         border-2 border-dashed hover:border-gray-400
@@ -56,6 +57,8 @@
       <p class="mt-1 text-gray-500">You haven’t added any files to your board yet.</p>
     </div>
   </div>
+
+  <v-file-viewer v-if="files.length > 0" :file="files[0]" />
 </template>
 
 <script lang="ts">
@@ -68,6 +71,7 @@ import VFile from '@/components/File.vue';
 import { BObject, getBoardFiles } from '@/api';
 import useDrop from '@/hooks/useDrop';
 import request from '@/api/request';
+import VFileViewer from '@/components/FileViewer.vue';
 
 export type FileEventTarget = EventTarget & { files: FileList };
 
@@ -151,6 +155,6 @@ export default defineComponent({
       openSelectFilesHandler,
     };
   },
-  components: { VFile },
+  components: { VFile, VFileViewer },
 });
 </script>
